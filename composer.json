@@ -1,0 +1,36 @@
+{
+    "name": "pixelvide/laravel-sms-gateway",
+    "description": "Pixelvide SMS Gateway",
+    "type": "package",
+    "scripts": {
+        "test:migrate": "phpunit --migrate-configuration",
+        "test": "phpunit"
+    },
+    "require": {
+        "php": "^7.3|^8.0",
+        "laravel/framework": "^7.0",
+        "aws/aws-sdk-php": "^3.184",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5"
+    },
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Nitin Goyal",
+            "email": "nitingoyal.dev@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Pixelvide\\SMSGateway\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pixelvide\\SMSGateway\\Test\\": "tests/"
+        }
+    }
+}
