@@ -54,7 +54,7 @@ class SMS
      */
     public function addSubstitute(string $key, string $val): SMS
     {
-        $this->subtitutes[$key] = $val;
+        $this->substitutes[$key] = $val;
         return $this;
     }
 
