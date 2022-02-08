@@ -1,7 +1,7 @@
 {
     "name": "pixelvide/laravel-sms-gateway",
     "description": "Pixelvide SMS Gateway",
-    "version": "1.0.0",
+    "version": "0.0.0",
     "type": "package",
     "license": "GPL-3.0-or-later",
     "authors": [
@@ -27,11 +27,11 @@
     },
     "require": {
         "php": "^7.3|^8.0",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^6.0",
         "aws/aws-sdk-php": "^3.184",
         "ext-json": "*"
     },
     "require-dev": {
-        "orchestra/testbench": "^5"
+        "orchestra/testbench": "^4"
     }
 }
