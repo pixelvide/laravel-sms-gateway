@@ -56,11 +56,11 @@ class SMSGateway {
 
         return [
             'FunctionName' => $this->smsGatewayEndpoint,
-            'Payload' => [
+            'Payload' => json_encode([
                 'templateId' => $sms->getTemplateId(),
                 'substitutes' => $sms->getSubstitutes(),
                 'recipients' => $sms->getRecipients(),
-            ],
+            ]),
         ];
     }
 
