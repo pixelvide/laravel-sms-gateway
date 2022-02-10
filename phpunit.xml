@@ -19,6 +19,6 @@
     <server name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
     <server name="AWS_REGION" value="ap-south-1"/>
     <server name="SMS_GATEWAY_REGION" value="ap-south-1"/>
-    <server name="SMS_GATEWAY_ENDPOINT" value="https://sqs.ap-south-1.amazonaws.com/178751861697/SmsGatewayStack-Processorqueue575BB7E1-YERCBEQS9ZGR"/>
+    <server name="SMS_GATEWAY_ENDPOINT" value="AWS_LAMBDA_FUNCTION_ARN"/>
   </php>
 </phpunit>
