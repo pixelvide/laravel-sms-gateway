@@ -72,6 +72,8 @@ class SMSGateway {
     public function send(SMS $sms) {
         $sms->validate();
 
-        return $this->lambdaClient->invoke($this->gatewayPayload($sms));
+        $response = $this->lambdaClient->invoke($this->gatewayPayload($sms));
+
+        return $response->get('Payload');
     }
 }

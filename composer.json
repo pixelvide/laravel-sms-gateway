@@ -1,7 +1,7 @@
 {
     "name": "pixelvide/laravel-sms-gateway",
     "description": "Pixelvide SMS Gateway",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "type": "package",
     "license": "GPL-3.0-or-later",
     "authors": [
