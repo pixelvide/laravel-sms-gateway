@@ -2,6 +2,7 @@
 
 namespace Pixelvide\SMSGateway;
 
+use Aws\Lambda\LambdaClient;
 use Aws\Sqs\SqsClient;
 use Pixelvide\SMSGateway\Exceptions\RecipientCountException;
 use Pixelvide\SMSGateway\Exceptions\TemplateIdNotSetException;
@@ -13,9 +14,9 @@ class SMSGateway {
      */
     protected $smsGatewayEndpoint;
     /**
-     * @var SqsClient
+     * @var LambdaClient
      */
-    protected $sqsClient;
+    protected $lambdaClient;
 
     /**
      * AWSGateway constructor.
@@ -25,14 +26,14 @@ class SMSGateway {
 
         $awsConfig = [
             'region' => env('SMS_GATEWAY_REGION', 'ap-south-1'),
-            'version' => '2012-11-05',
+            'version' => '2015-03-31',
         ];
 
         if (env('AWS_PROFILE')) {
             $awsConfig['profile'] = env('AWS_PROFILE');
         }
 
-        $this->sqsClient = new SqsClient($awsConfig);
+        $this->lambdaClient = new LambdaClient($awsConfig);
     }
 
     private function isNullOrEmptyString($str): bool
@@ -54,8 +55,8 @@ class SMSGateway {
         }
 
         return [
-            'QueueUrl' => $this->smsGatewayEndpoint,
-            'MessageBody' => json_encode([
+            'FunctionName' => $this->smsGatewayEndpoint,
+            'Payload' => json_encode([
                 'templateId' => $sms->getTemplateId(),
                 'substitutes' => $sms->getSubstitutes(),
                 'recipients' => $sms->getRecipients(),
@@ -71,6 +72,8 @@ class SMSGateway {
     public function send(SMS $sms) {
         $sms->validate();
 
-        $this->sqsClient->sendMessage($this->gatewayPayload($sms));
+        $response = $this->lambdaClient->invoke($this->gatewayPayload($sms));
+
+        return $response->get('Payload');
     }
 }
