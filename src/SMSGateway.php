@@ -73,7 +73,9 @@ class SMSGateway {
         $sms->validate();
 
         $response = $this->lambdaClient->invoke($this->gatewayPayload($sms));
+        $result = $response->get('Payload')
+            ->getContents();
 
-        return $response->get('Payload');
+        return json_decode($result, true);
     }
 }
