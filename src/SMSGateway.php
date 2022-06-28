@@ -59,13 +59,14 @@ class SMSGateway
      *
      * @throws VariableMissingException
      */
-    private function gatewayPayload(array $payload): array
+    private function gatewayPayload(array $payload, string $invocationType = 'RequestResponse'): array
     {
         if ($this->isNullOrEmptyString($this->smsGatewayEndpoint)) {
             throw new VariableMissingException('SMS_GATEWAY_ENDPOINT variable is either unspecified or empty');
         }
         return [
             'FunctionName' => $this->smsGatewayEndpoint,
+            'InvocationType' => $invocationType,
             'Payload' => json_encode($payload),
         ];
     }
@@ -100,6 +101,26 @@ class SMSGateway
         }
 
         $response = $this->lambdaClient->invoke($this->gatewayPayload($gwPayload));
+        $result = $response->get('Payload')
+            ->getContents();
+
+        return json_decode($result, true);
+    }
+
+    /**
+     * @param  array  $smsArr
+     * @return mixed
+     * @throws VariableMissingException
+     */
+    public function sendBulkAsync(array $smsArr) {
+        $gwPayload = array();
+        foreach ($smsArr as $sms) {
+            $sms->validate();
+
+            $gwPayload[] = $this->buildSMSPayload($sms);
+        }
+
+        $response = $this->lambdaClient->invoke($this->gatewayPayload($gwPayload, 'Event'));
         $result = $response->get('Payload')
             ->getContents();
 
