@@ -1,0 +1,6 @@
+[
+  {
+    "description": "Gateway Supports changed to lambda",
+    "type": "minor"
+  }
+]
